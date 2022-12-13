@@ -1,0 +1,40 @@
+<h1>Looking up for your best home buy?</h1>
+
+<% if logged_in? %>
+  <h3>Welcome : <%=current_user['first_name']%></h3>
+
+  <section class="controls">
+  <form action="/sessions" method="POST">
+  <input type="hidden" name="_method" value="delete">
+  <button>Log out</button>
+  <%# this will be on the top right corner %>
+  </form>
+  <a href="/properties/new">Add property</a>
+  <%# will have to create another section to use CSS later %>
+  </section>
+  
+ <section class="properties">
+  <% properties.each do |property|%>
+  <section class="property">
+    <header>
+    <h2><%= property['name']%></h2>
+
+    <section class="controls">
+      <a href="/properties/<%= property['id']%>">Edit</a>
+
+      <form action="/properties/<%= property['id'] %>" method="POST">
+        <input type="hidden" name="_method" value="delete">
+        <button>Delete</button>
+      </form>     
+    </section>
+    </header>
+
+    <img src="<%= property['image_url'] %>" alt="">
+  </section>
+  <% end %>
+ </section>
+  <%else %>
+  <a href="/users/new">Sign Up</a>
+  <a href="/sessions/new">Log in</a>
+<% end %>
+

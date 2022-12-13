@@ -1,0 +1,22 @@
+<h1> EDIT your home </h1>
+<form action="/properties/<%= property['id'] %>" method="POST">
+  <input type="hidden" name="_method" value="put">
+
+  <label for="">Name: </label>
+  <input type="text" name="name" value="<%= property['name'] %>">
+
+  <label for="">Image URL: </label>
+  <input type="text" name="image_url" value="<%= property['image_url'] %>">
+
+  <label for="">Region: </label>
+  <input type="text" name="region" value="<%= property['region'] %>">
+
+  <label for="">Bedroom number: </label>
+  <input type="text" name="bedroom_no" value="<%= property['bedroom_no'] %>">
+
+  <label for="">Price: </label>
+  <input type="text" name="price" value="<%= property['price'] %>">
+
+
+  <button>Update property</button>
+</form>

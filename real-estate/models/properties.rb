@@ -12,7 +12,7 @@ def get_property(id)
 end
 
 def update_property(id, name, image_url, region, bedroom_no, price)
-  run_sql('UPDATE properties SET name = $2, image_url =$3 region = $4, bedroom_no = $5, price = $6 WHERE id = $1', [id, name, image_url, region, bedroom_no, price])
+  run_sql('UPDATE properties SET name = $2, image_url =$3, region = $4, bedroom_no = $5, price = $6 WHERE id = $1', [id, name, image_url, region, bedroom_no, price])
 end
 
 def delete_property(id)

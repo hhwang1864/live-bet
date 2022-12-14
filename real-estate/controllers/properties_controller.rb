@@ -15,7 +15,7 @@ get '/properties/new' do
   erb :'properties/new'
 end
 
-post '/properties' do
+post '/properties/' do
 
   if !logged_in?
     redirect'/'
@@ -32,7 +32,9 @@ post '/properties' do
   redirect '/'
 end
 
-get '/properties/:id/edit' do
+
+
+get '/properties/:id' do
 
   if !logged_in?
     redirect'/'
@@ -46,7 +48,7 @@ get '/properties/:id/edit' do
   }
 end
 
-put '/properties:id' do
+put '/properties/:id' do
 
   if !logged_in?
     redirect'/'

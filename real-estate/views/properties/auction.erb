@@ -1,0 +1,43 @@
+<% if logged_in? %>
+  <h3>Welcome : <%=current_user['first_name']%></h3>
+
+  <section class="controls">
+    <form action="/sessions" method="POST">
+      <input type="hidden" name="_method" value="delete">
+      <button>Log out</button>
+    <%# this will be on the top right corner %>
+    </form>    
+  </section>
+
+
+<% else%>
+  
+  <div class="property-list container">
+  
+        <% properties.each do |property|%>
+          <section class="property box">
+            <header>
+            <a href=""><%= property['name'] %></a>            
+            <img src="<%= property['image_url'] %>" alt="">
+            <p>The current price of this house is <%= property['price'] %> dollars</p>
+            <p><%= property['bedroom_no']%> bedrooms</p>
+            <p> Please refresh your page to have the Best Auctioning offer</p>
+
+            <form action="/properties/<%=property['id'] %>" method="POST">
+              <input type="hidden" name="_method" value="put">
+
+               <label for="">Price: </label>
+               <input type="text" name="price" value="<%= property['price'] %>">
+
+                <button>BID</button>
+            </form>
+                       
+            </header>
+          </section>
+        <% end %>
+        
+      
+
+
+  </div>
+<% end %>

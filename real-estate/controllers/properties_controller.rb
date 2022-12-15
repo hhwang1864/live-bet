@@ -82,8 +82,19 @@ end
 get '/house' do
   properties = all_properties()
 
-  erb :'properties/new', locals: {
+  erb :'properties/house', locals: {
     properties: properties 
   }
 
 end
+
+
+get '/auction' do
+  properties = all_properties()
+
+  erb :'properties/auction', locals: {
+    properties: properties 
+  }
+
+end
+

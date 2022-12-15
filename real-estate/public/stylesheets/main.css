@@ -1,25 +1,22 @@
+body {
+  max-width: fit-content;
+}
+
 .map-cbd {
   position: absolute;
   left: 0px;
   top: 0px;
   z-index: -1;
+  max-width: 100rem;
 }
 
 .searchbox {
+  flex: 0 0 auto;
   display: flex;
-  flex-direction: column;
-  -webkit-box-pack: center;
-  justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-  text-align: center;
-  position: relative;
-  height: 320px;
-  max-width: 1664px;
-  margin: 0px auto;
-  border-radius: unset;
-  padding: unset;
-  font-size: 40px;
+  margin-left: auto;
+  float: right;
 }
 
 .searchbox input {
@@ -27,6 +24,13 @@
   background-color: saddlebrown;
 }
 
+.containers {
+  font-size: 16px;
+  line-height: 26px;
+  position: relative;
+  color: rgb(34, 34, 34);
+  user-select: none;
+}
 
 .search {
   display: flex;
@@ -55,3 +59,73 @@
   object-fit: cover;
 
 }
+
+.container {
+  border: solid 1px black;
+  display: grid;
+  grid-template-rows: auto;
+
+}
+
+.box {
+  border: solid 1px red;
+
+}
+
+/* 
+.property-list {
+  position: fixed;
+  width: 150px;
+  background-color: #DDD;
+  font-size: 10px;
+  overflow-y: scroll;
+  top: 0;
+  bottom: 0;
+}
+
+.user-login {
+  border: 2px solid red;
+  float: left;
+}
+
+h1 {
+  text-align: center;
+  margin-left: 5rem;
+}
+
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 575.98px) {
+  .navbar-expand-sm>.container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+    flex-wrap: nowrap;
+  }
+}
+
+.display-4 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.navbar-expand-sm .navbar-collapse {
+  display: flex !important;
+  flex-basis: auto;
+} */

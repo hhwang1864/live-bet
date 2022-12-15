@@ -1,4 +1,6 @@
-<h1>Looking up for your best home buy?</h1>
+<h1>Feel like your new home?</h1>
+<img src="https://maps-melbourne.com/img/0/map-of-melbourne-cbd.jpg" class="map-cbd" alt="">
+
 
 <% if logged_in? %>
   <h3>Welcome : <%=current_user['first_name']%></h3>
@@ -38,8 +40,7 @@
     <a href="/users/new">Sign Up</a>
     <a href="/sessions/new">Log in</a>
   </div>
-  <div class="searchbox">
-  <h2>Feel like your new home?</h2>
+  <div class="searchbox"> 
   <div class='container'>
   <div class="onclick-button">region</div>
   <div class="onclick-button">bed room</div>
@@ -50,6 +51,16 @@
     <input type="text">
   <span class="search">SEARCH</span>
   </div>
+  <div class="property-list">
+  <% properties.each do |property|%>
+  <section class="property">
+    <header>
+    <a href="/house"><%= property['name'] %></a>
+    </header>
+    <img src="<%= property['image_url'] %>" alt="">
+    <p><%= property['price'] %> dollars</p>
+    <p><%= property['bedroom_no']%> bedrooms</p>
+  </section>
+  <% end %>
+  </div>
 <% end %>
-
-

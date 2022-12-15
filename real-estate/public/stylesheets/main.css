@@ -1,5 +1,8 @@
-body {
-  background-color: #EFEFEF;
+.map-cbd {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
 }
 
 .searchbox {
@@ -44,4 +47,11 @@ body {
   width: 220px;
   height: 40px;
   margin: 10px 10px 50px 10px;
+}
+
+.property-list img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+
 }

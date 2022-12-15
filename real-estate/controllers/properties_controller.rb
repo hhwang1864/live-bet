@@ -78,3 +78,12 @@ delete '/properties/:id' do
   redirect '/'
 end
 
+
+get '/house' do
+  properties = all_properties()
+
+  erb :'properties/new', locals: {
+    properties: properties 
+  }
+
+end

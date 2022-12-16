@@ -18,3 +18,10 @@ end
 def delete_property(id)
   run_sql('DELETE FROM properties WHERE id = $1',[id])
 end
+
+
+def update_property1(id,price)
+  run_sql('UPDATE properties SET price = $2 WHERE id = $1', [id, price])
+end
+
+

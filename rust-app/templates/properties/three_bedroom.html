@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">Three+ Bedroom Properties</h2>
+  <a href="/" class="btn btn-outline-secondary mb-4">Back to all properties</a>
+
+  {% if properties | length == 0 %}
+    <p class="text-muted">No three bedroom or larger properties found.</p>
+  {% else %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for property in properties %}
+        <div class="col">
+          <div class="card h-100">
+            <img src="{{ property.image_url }}" class="card-img-top"
+              alt="{{ property.name }}" style="height:200px;object-fit:cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{ property.name }}</h5>
+              <p class="card-text text-muted">{{ property.region }}</p>
+              <p class="card-text"><strong>{{ property.bedroom_no }}</strong> bedrooms &bull; ${{ property.price }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

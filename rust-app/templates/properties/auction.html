@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-5">
+  <h1 class="mb-4">Live Auction</h1>
+
+  {% if logged_in %}
+    <div class="alert alert-info">
+      Welcome, {{ current_user.first_name }}! You are logged in.
+      <form action="/sessions" method="POST" class="d-inline ms-3">
+        <input type="hidden" name="_method" value="delete">
+        <button class="btn btn-sm btn-outline-secondary">Log out</button>
+      </form>
+    </div>
+  {% endif %}
+
+  <p class="text-muted mb-4">Refresh the page to see the latest bids.</p>
+
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for property in properties %}
+      <div class="col">
+        <div class="card h-100">
+          <img src="{{ property.image_url }}" class="card-img-top"
+            alt="{{ property.name }}" style="height:200px;object-fit:cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ property.name }}</h5>
+            <p class="card-text">
+              <strong>Current price:</strong> ${{ property.price }}<br>
+              <strong>Bedrooms:</strong> {{ property.bedroom_no }}<br>
+              <strong>Region:</strong> {{ property.region }}
+            </p>
+          </div>
+          <div class="card-footer">
+            <form action="/properties/{{ property.id }}" method="POST" class="d-flex gap-2">
+              <input type="hidden" name="_method" value="put">
+              <input type="hidden" name="name" value="{{ property.name }}">
+              <input type="hidden" name="image_url" value="{{ property.image_url }}">
+              <input type="hidden" name="region" value="{{ property.region }}">
+              <input type="hidden" name="bedroom_no" value="{{ property.bedroom_no }}">
+              <input type="number" name="price" class="form-control"
+                value="{{ property.price }}" min="0" placeholder="Your bid">
+              <button class="btn btn-warning">BID</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="mt-4">
+    <a href="/" class="btn btn-outline-secondary">Back to listings</a>
+  </div>
+</div>
+{% endblock %}

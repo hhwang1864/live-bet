@@ -99,46 +99,25 @@ get '/auction' do
 end
 
 get '/one_bedroom' do
-
-  name = params['name']
-  image_url = params['image_url']
-  region = params['region']
-  bedroom_no = params['bedroom_no']
-  price = params['price']
-
-  properties = one_bedroom(bedroom_no)
+  properties = one_bedroom()
 
   erb :'properties/one_bedroom', locals: {
-    properties: properties 
+    properties: properties
   }
 end
 
 get '/two_bedroom' do
-
-  name = params['name']
-  image_url = params['image_url']
-  region = params['region']
-  bedroom_no = params['bedroom_no']
-  price = params['price']
-  
   properties = two_bedroom()
 
   erb :'properties/two_bedroom', locals: {
-    properties: properties 
+    properties: properties
   }
 end
 
-get '/three_bedroom' do 
-
-  name = params['name']
-  image_url = params['image_url']
-  region = params['region']
-  bedroom_no = params['bedroom_no']
-  price = params['price']
-
+get '/three_bedroom' do
   properties = three_bedroom()
 
   erb :'properties/three_bedroom', locals: {
-    properties: properties 
+    properties: properties
   }
 end

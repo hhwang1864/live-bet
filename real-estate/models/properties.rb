@@ -20,8 +20,16 @@ def delete_property(id)
 end
 
 
-def update_property1(id,price)
-  run_sql('UPDATE properties SET price = $2 WHERE id = $1', [id, price])
+def one_bedroom
+  run_sql('SELECT * FROM properties WHERE bedroom_no = 1 ORDER BY id')
+end
+
+def two_bedroom
+  run_sql('SELECT * FROM properties WHERE bedroom_no = 2 ORDER BY id')
+end
+
+def three_bedroom
+  run_sql('SELECT * FROM properties WHERE bedroom_no >= 3 ORDER BY id')
 end
 
 

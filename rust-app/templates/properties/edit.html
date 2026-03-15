@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-5" style="max-width:600px;">
+  <h1 class="mb-4">Edit Property</h1>
+  {% if property %}
+    <form action="/properties/{{ property.id }}" method="POST">
+      <input type="hidden" name="_method" value="put">
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" name="name" class="form-control" value="{{ property.name }}" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Image URL</label>
+        <input type="text" name="image_url" class="form-control" value="{{ property.image_url }}">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Region</label>
+        <input type="text" name="region" class="form-control" value="{{ property.region }}">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Bedroom number</label>
+        <input type="number" name="bedroom_no" class="form-control" value="{{ property.bedroom_no }}" min="1">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Price ($)</label>
+        <input type="number" name="price" class="form-control" value="{{ property.price }}" min="0">
+      </div>
+      <button class="btn btn-primary">Update property</button>
+      <a href="/" class="btn btn-outline-secondary ms-2">Cancel</a>
+    </form>
+  {% else %}
+    <p>Property not found.</p>
+    <a href="/" class="btn btn-secondary">Back</a>
+  {% endif %}
+</div>
+{% endblock %}

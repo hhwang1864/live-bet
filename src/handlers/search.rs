@@ -4,7 +4,6 @@ use axum::{
 };
 use axum_extra::extract::cookie::SignedCookieJar;
 use serde::Deserialize;
-use tera::Context;
 
 use crate::{models::search, AppState};
 

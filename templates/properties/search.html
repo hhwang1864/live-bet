@@ -19,7 +19,7 @@
   {% if query and query != "" %}
     <p class="text-muted mb-3">
       Showing results for <strong>"{{ query }}"</strong>
-      ({{ results | length }} match{{ results | length | pluralize("", "es") }})
+      ({{ results | length }} result{% if results | length != 1 %}s{% endif %})
     </p>
   {% endif %}
 

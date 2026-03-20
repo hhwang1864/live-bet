@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4">
+    <i class="fa fa-search me-2"></i>Vector Search
+  </h2>
+
+  <form action="/search" method="GET" class="mb-4">
+    <div class="input-group input-group-lg">
+      <input type="text" name="q" class="form-control" value="{{ query }}"
+        placeholder="Try: luxury mansion, budget studio Sydney, family home Melbourne...">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+    <small class="text-muted mt-1 d-block">
+      Powered by pgvector — finds properties by semantic similarity, not just keywords.
+    </small>
+  </form>
+
+  {% if query and query != "" %}
+    <p class="text-muted mb-3">
+      Showing results for <strong>"{{ query }}"</strong>
+      ({{ results | length }} match{{ results | length | pluralize("", "es") }})
+    </p>
+  {% endif %}
+
+  {% if results | length > 0 %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for r in results %}
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            {% if r.image_url %}
+              <img src="{{ r.image_url }}" class="card-img-top" alt="{{ r.name }}"
+                style="height:200px;object-fit:cover;">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ r.name }}</h5>
+              <p class="card-text text-muted">
+                {{ r.region }} &bull; {{ r.bedroom_no }} bed &bull; ${{ r.price }}
+              </p>
+            </div>
+            <div class="card-footer bg-white border-top-0">
+              <small class="text-muted">
+                Similarity: {{ ((1.0 - r.distance) * 100.0) | round(method="ceil", precision=1) }}%
+              </small>
+              <div class="progress mt-1" style="height:6px;">
+                <div class="progress-bar bg-success" style="width:{{ ((1.0 - r.distance) * 100.0) | round }}%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% elif query and query != "" %}
+    <div class="alert alert-info">
+      No matching properties found. Try a different search term.
+    </div>
+  {% endif %}
+
+  <div class="mt-4">
+    <a href="/" class="btn btn-outline-secondary">Back to listings</a>
+  </div>
+</div>
+{% endblock %}

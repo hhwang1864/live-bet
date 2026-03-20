@@ -14,7 +14,7 @@ use crate::{
 
 use super::{get_user_id, render};
 
-async fn base_ctx(state: &AppState, jar: &SignedCookieJar) -> Context {
+pub async fn base_ctx(state: &AppState, jar: &SignedCookieJar) -> Context {
     let mut ctx = Context::new();
     if let Some(uid) = get_user_id(jar) {
         if let Some(u) = user::find_user_by_id(&state.db, uid).await {

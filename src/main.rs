@@ -20,7 +20,6 @@ pub struct AppState {
     pub key: Key,
 }
 
-// Allows SignedCookieJar to extract the Key from AppState automatically.
 impl FromRef<AppState> for Key {
     fn from_ref(state: &AppState) -> Self {
         state.key.clone()
@@ -32,15 +31,17 @@ async fn main() {
     dotenvy::dotenv().ok();
     tracing_subscriber::fmt::init();
 
-    let database_url = std::env::var("DATABASE_URL")
-        .expect("DATABASE_URL must be set (copy .env.example to .env)");
+    let database_url =
+        std::env::var("DATABASE_URL").expect("DATABASE_URL must be set (copy .env.example to .env)");
 
     let db = db::create_pool(&database_url).await;
 
+    // Backfill vector embeddings for any properties that don't have one yet.
+    models::property::backfill_embeddings(&db).await;
+
     let tera = Tera::new("templates/**/*.html").expect("Failed to parse Tera templates");
 
-    let secret = std::env::var("SECRET_KEY")
-        .unwrap_or_else(|_| "0".repeat(64));
+    let secret = std::env::var("SECRET_KEY").unwrap_or_else(|_| "0".repeat(64));
     let mut secret_bytes = secret.into_bytes();
     while secret_bytes.len() < 64 {
         secret_bytes.push(0);
@@ -67,6 +68,8 @@ async fn main() {
         .route("/one_bedroom", get(handlers::properties::one_bedroom))
         .route("/two_bedroom", get(handlers::properties::two_bedroom))
         .route("/three_bedroom", get(handlers::properties::three_bedroom))
+        // Vector search
+        .route("/search", get(handlers::search::search))
         // Users
         .route("/users/new", get(handlers::users::new_form))
         .route("/users", post(handlers::users::create))

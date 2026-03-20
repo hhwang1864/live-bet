@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 
-#[derive(Debug, Serialize, Deserialize, sqlx::FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, sqlx::FromRow)]
 pub struct User {
     pub id: i32,
     pub first_name: Option<String>,
@@ -58,4 +58,61 @@ pub async fn verify_password(hash: &str, password: &str) -> bool {
     tokio::task::spawn_blocking(move || bcrypt::verify(&password, &hash).unwrap_or(false))
         .await
         .unwrap_or(false)
+}
+
+// ---------------------------------------------------------------------------
+// Unit tests
+// ---------------------------------------------------------------------------
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_user_serialize() {
+        let u = User {
+            id: 42,
+            first_name: Some("Harry".into()),
+            last_name: Some("Hwang".into()),
+            email: Some("harry@example.com".into()),
+            password_digest: Some("$2b$12$hash".into()),
+        };
+        let json = serde_json::to_value(&u).unwrap();
+        assert_eq!(json["id"], 42);
+        assert_eq!(json["first_name"], "Harry");
+        assert_eq!(json["email"], "harry@example.com");
+    }
+
+    #[test]
+    fn test_user_deserialize_with_nulls() {
+        let json = r#"{"id":1,"first_name":null,"last_name":null,"email":null,"password_digest":null}"#;
+        let u: User = serde_json::from_str(json).unwrap();
+        assert_eq!(u.id, 1);
+        assert!(u.first_name.is_none());
+        assert!(u.email.is_none());
+    }
+
+    #[tokio::test]
+    async fn test_verify_password_correct() {
+        let hash = tokio::task::spawn_blocking(|| {
+            bcrypt::hash("secret123", 4).unwrap() // cost=4 for fast tests
+        })
+        .await
+        .unwrap();
+        assert!(verify_password(&hash, "secret123").await);
+    }
+
+    #[tokio::test]
+    async fn test_verify_password_wrong() {
+        let hash = tokio::task::spawn_blocking(|| {
+            bcrypt::hash("secret123", 4).unwrap()
+        })
+        .await
+        .unwrap();
+        assert!(!verify_password(&hash, "wrong_password").await);
+    }
+
+    #[tokio::test]
+    async fn test_verify_password_invalid_hash() {
+        assert!(!verify_password("not-a-bcrypt-hash", "anything").await);
+    }
 }

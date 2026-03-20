@@ -1,0 +1,20 @@
+[package]
+name = "live-bet"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7"
+axum-extra = { version = "0.9", features = ["cookie-signed"] }
+tokio = { version = "1", features = ["full"] }
+sqlx = { version = "0.8", features = ["postgres", "runtime-tokio-native-tls"] }
+pgvector = { version = "0.4", features = ["sqlx"] }
+tera = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+bcrypt = "0.15"
+tower-http = { version = "0.5", features = ["fs"] }
+tower = "0.5"
+dotenvy = "0.15"
+tracing = "0.1"
+tracing-subscriber = "0.3"
